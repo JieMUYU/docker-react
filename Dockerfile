@@ -1,4 +1,4 @@
-FROM node:buster as builder
+FROM node:buster
 WORKDIR '/app'
 COPY package.json .
 RUN npm i
@@ -6,4 +6,5 @@ COPY . .
 RUN npm run build
 
 FROM nginx
-COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
+COPY --from=0 /app/build /usr/share/nginx/html
